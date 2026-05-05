@@ -1,9 +1,11 @@
 name: Deploy to GitHub Pages
 
 on:
-  push:
-    branches:
-      - main
+  # Documentation is maintained by the upstream project.
+  # push:
+  #   branches:
+  #     - main
+  workflow_dispatch:
 
 jobs:
   docs:

@@ -1,12 +1,13 @@
 name: Check Documentation
 
 on:
-  push:
-    branches:
-      - main
-  pull_request:
-    paths:
-      - docs/**
+  # Documentation is maintained by the upstream project.
+  # push:
+  #   branches:
+  #     - main
+  # pull_request:
+  #   paths:
+  #     - docs/**
   workflow_dispatch:
 
 jobs:
