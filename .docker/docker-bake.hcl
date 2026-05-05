@@ -9,8 +9,8 @@
 #   export BLUE_ROS_DISTRO=iron
 #   docker buildx bake
 #
-variable "BLUE_ROS_DISTRO" { default = "rolling" }
-variable "BLUE_GITHUB_REPO" { default = "robotic-decision-making-lab/blue" }
+variable "BLUE_ROS_DISTRO" { default = "jazzy" }
+variable "BLUE_GITHUB_REPO" { default = "rakeshv24/blue" }
 
 group "default" {
   targets = ["ci", "robot", "desktop", "desktop-nvidia"]

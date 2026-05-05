@@ -1,6 +1,6 @@
 services:
   blue:
-    image: ghcr.io/rakeshv24/blue:rolling-robot
+    image: ghcr.io/rakeshv24/blue:jazzy-robot
     build:
       dockerfile: .docker/Dockerfile
       target: robot

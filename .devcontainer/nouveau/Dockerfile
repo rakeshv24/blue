@@ -1,4 +1,4 @@
-FROM ghcr.io/rakeshv24/blue:rolling-desktop
+FROM ghcr.io/rakeshv24/blue:jazzy-desktop
 
 # Install ROS dependencies
 # This is done in a previous stage, but we include it again here in case anyone wants to

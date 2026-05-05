@@ -1,6 +1,6 @@
 services:
   blue:
-    image: ghcr.io/rakeshv24/blue:rolling-desktop
+    image: ghcr.io/rakeshv24/blue:jazzy-desktop
     environment:
       - DISPLAY=${DISPLAY}
       - XDG_RUNTIME_DIR=${XDG_RUNTIME_DIR}
