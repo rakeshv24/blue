@@ -1,6 +1,5 @@
 {
   "name": "NVIDIA Dev Container",
-  // "dockerFile": "Dockerfile",
   "dockerFile": "../../.docker/Dockerfile",
   "context": "../..",
   "workspaceMount": "source=${localWorkspaceFolder},target=/home/ubuntu/ws_blue/src/blue,type=bind",
@@ -23,7 +22,6 @@
     "WAYLAND_DISPLAY": "${localEnv:WAYLAND_DISPLAY}",
     "XDG_RUNTIME_DIR": "${localEnv:XDG_RUNTIME_DIR}",
     "PULSE_SERVER": "${localEnv:PULSE_SERVER}",
-    // "LIBGL_ALWAYS_SOFTWARE": "1",
     "QT_X11_NO_MITSHM": "1",
     "NVIDIA_VISIBLE_DEVICES": "all",
     "NVIDIA_DRIVER_CAPABILITIES": "all",

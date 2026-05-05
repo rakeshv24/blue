@@ -4,7 +4,7 @@
     "dockerfile": "Dockerfile",
     "context": "../..",
     "args": {
-      "BLUE_GITHUB_REPO": "ghcr.io/robotic-decision-making-lab/blue",
+      "BLUE_GITHUB_REPO": "ghcr.io/rakeshv24/blue",
       "ROS_DISTRO": "rolling"
     }
   },

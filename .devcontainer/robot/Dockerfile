@@ -1,7 +1,7 @@
 #
 # Dockerfile for *-robot development container
 #
-ARG BLUE_GITHUB_REPO=Robotic-Decision-Making-Lab/blue
+ARG BLUE_GITHUB_REPO=rakeshv24/blue
 ARG ROS_DISTRO=rolling
 FROM ${BLUE_GITHUB_REPO}:${ROS_DISTRO}-robot
 
