@@ -5,11 +5,8 @@ controller_manager:
       inactive:
         - bluerov2_heavy_thrusters
 
-    # adaptive_integral_terminal_sliding_mode_controller:
-    #   type: velocity_controllers/AdaptiveIntegralTerminalSlidingModeController
-
-    impedance_controller:
-      type: impedance_controller/ImpedanceController
+    naive_mpc:
+      type: optimal_controllers/NaiveMPC
 
     thruster_allocation_matrix_controller:
       type: thruster_allocation_matrix_controller/ThrusterAllocationMatrixController
@@ -38,72 +35,26 @@ controller_manager:
     thruster8_controller:
       type: thruster_controllers/PolynomialThrustCurveController
 
-# adaptive_integral_terminal_sliding_mode_controller:
-#   ros__parameters:
-#     reference_controller: thruster_allocation_matrix_controller
-#     use_external_measured_states: true
-#     gains:
-#       lambda: 0.9
-#       x:
-#         alpha: 12.0
-#         k1_min: 0.1
-#         k2: 0.4
-#         k_theta: 2.0
-#         mu: 0.01
-#       y:
-#         alpha: 12.0
-#         k1_min: 0.1
-#         k2: 0.4
-#         k_theta: 2.0
-#         mu: 0.01
-#       z:
-#         alpha: 12.0
-#         k1_min: 0.4
-#         k2: 0.8
-#         k_theta: 2.0
-#         mu: 0.01
-#       rx:
-#         alpha: 0.5
-#         k1_min: 0.1
-#         k2: 0.4
-#         k_theta: 2.0
-#         mu: 0.01
-#       ry:
-#         alpha: 12.0
-#         k1_min: 0.1
-#         k2: 1.0
-#         k_theta: 2.0
-#         mu: 0.01
-#       rz:
-#         alpha: 12.0
-#         k1_min: 0.1
-#         k2: 0.4
-#         k_theta: 2.0
-#         mu: 0.01
-
-impedance_controller:
+naive_mpc:
   ros__parameters:
     reference_controller: thruster_allocation_matrix_controller
     use_external_measured_states: true
-    gains:
-      x:
-        kp: 0.7
-        kd: 0.5
-      y:
-        kp: 0.7
-        kd: 0.5
-      z:
-        kp: 0.7
-        kd: 0.5
-      rx:
-        kp: 0.1
-        kd: 0.02
-      ry:
-        kp: 0.1
-        kd: 0.02
-      rz:
-        kp: 0.1
-        kd: 0.02
+    dt: 0.01
+    horizon: 20
+    thrusters: 8
+
+    penalty:
+      P: [2500.0, 2500.0, 2500.0, 500.0, 500.0, 500.0, 10.0, 10.0, 10.0, 50.0, 50.0, 50.0]
+      Q: [500.0, 500.0, 500.0, 100.0, 100.0, 100.0, 1.0, 1.0, 1.0, 10.0, 10.0, 10.0]
+      R: [0.05, 0.05, 0.05, 100.0, 100.0, 100.0]
+
+    bounds:
+      xmin: [-100, -100, -0.5, -1.0, -1.0, -1.0, -1.0, -2.0, -2.0, -2.0, -0.25, -0.25, -0.25]
+      xmax: [100, 100, 100, 1.0, 1.0, 1.0, 1.0, 2.0, 2.0, 2.0, 0.25, 0.25, 0.25]
+      umin: [-40.2, -40.2, -40.2, -40.2, -40.2, -40.2]
+      umax: [51.5, 51.5, 51.5, 51.5, 51.5, 51.5]
+      dumin: [-10.0, -10.0, -10.0, -10.0, -10.0, -10.0]
+      dumax: [10.0, 10.0, 10.0, 10.0, 10.0, 10.0]
 
 thruster_allocation_matrix_controller:
   ros__parameters:
@@ -138,8 +89,8 @@ thruster1_controller:
     thruster: thruster1_joint
     min_thrust: -40.0
     max_thrust: 60.0
-    min_deadband: 1470
-    max_deadband: 1530
+    min_deadband_pwm: 1470
+    max_deadband_pwm: 1530
     neutral_pwm: 1500
     thrust_curve_coefficients: [1498.0, 12.01, -0.04731, -0.002098, 0.00002251]
 
@@ -148,8 +99,8 @@ thruster2_controller:
     thruster: thruster2_joint
     min_thrust: -40.0
     max_thrust: 60.0
-    min_deadband: 1470
-    max_deadband: 1530
+    min_deadband_pwm: 1470
+    max_deadband_pwm: 1530
     neutral_pwm: 1500
     thrust_curve_coefficients: [1498.0, 12.01, -0.04731, -0.002098, 0.00002251]
 
@@ -158,8 +109,8 @@ thruster3_controller:
     thruster: thruster3_joint
     min_thrust: -40.0
     max_thrust: 60.0
-    min_deadband: 1470
-    max_deadband: 1530
+    min_deadband_pwm: 1470
+    max_deadband_pwm: 1530
     neutral_pwm: 1500
     thrust_curve_coefficients: [1498.0, 12.01, -0.04731, -0.002098, 0.00002251]
 
@@ -168,8 +119,8 @@ thruster4_controller:
     thruster: thruster4_joint
     min_thrust: -40.0
     max_thrust: 60.0
-    min_deadband: 1470
-    max_deadband: 1530
+    min_deadband_pwm: 1470
+    max_deadband_pwm: 1530
     neutral_pwm: 1500
     thrust_curve_coefficients: [1498.0, 12.01, -0.04731, -0.002098, 0.00002251]
 
@@ -178,8 +129,8 @@ thruster5_controller:
     thruster: thruster5_joint
     min_thrust: -40.0
     max_thrust: 60.0
-    min_deadband: 1470
-    max_deadband: 1530
+    min_deadband_pwm: 1470
+    max_deadband_pwm: 1530
     neutral_pwm: 1500
     thrust_curve_coefficients: [1498.0, 12.01, -0.04731, -0.002098, 0.00002251]
 
@@ -188,8 +139,8 @@ thruster6_controller:
     thruster: thruster6_joint
     min_thrust: -40.0
     max_thrust: 60.0
-    min_deadband: 1470
-    max_deadband: 1530
+    min_deadband_pwm: 1470
+    max_deadband_pwm: 1530
     neutral_pwm: 1500
     thrust_curve_coefficients: [1498.0, 12.01, -0.04731, -0.002098, 0.00002251]
 
@@ -198,8 +149,8 @@ thruster7_controller:
     thruster: thruster7_joint
     min_thrust: -40.0
     max_thrust: 60.0
-    min_deadband: 1470
-    max_deadband: 1530
+    min_deadband_pwm: 1470
+    max_deadband_pwm: 1530
     neutral_pwm: 1500
     thrust_curve_coefficients: [1498.0, 12.01, -0.04731, -0.002098, 0.00002251]
 
@@ -208,7 +159,7 @@ thruster8_controller:
     thruster: thruster8_joint
     min_thrust: -40.0
     max_thrust: 60.0
-    min_deadband: 1470
-    max_deadband: 1530
+    min_deadband_pwm: 1470
+    max_deadband_pwm: 1530
     neutral_pwm: 1500
     thrust_curve_coefficients: [1498.0, 12.01, -0.04731, -0.002098, 0.00002251]

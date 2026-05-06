@@ -51,7 +51,7 @@ def generate_launch_description() -> LaunchDescription:
         ),
     ]
 
-    # The velocity controller expects state information to be provided in the FSD frame
+    # The optimal controller expects state information to be provided in the FSD frame
     message_transformer = IncludeLaunchDescription(
         FrontendLaunchDescriptionSource(
             PathJoinSubstitution(
@@ -98,13 +98,10 @@ def generate_launch_description() -> LaunchDescription:
         inactive = "--inactive"
         return [name, *cm, *controller_timeout, *switch_timeout, inactive]
 
-    velocity_controller_spawner = Node(
+    optimal_controller_spawner = Node(
         package="controller_manager",
         executable="spawner",
-        # arguments=make_controller_args(
-        #     "adaptive_integral_terminal_sliding_mode_controller"
-        # ),
-        arguments=make_controller_args("impedance_controller"),
+        arguments=make_controller_args("naive_mpc"),
     )
 
     thruster_spawners = [
@@ -147,11 +144,11 @@ def generate_launch_description() -> LaunchDescription:
         )
     )
 
-    delay_velocity_controller_spawner_after_tam_controller_spawner = (
+    delay_optimal_controller_spawner_after_tam_controller_spawner = (
         RegisterEventHandler(
             event_handler=OnProcessExit(
                 target_action=tam_controller_spawner,
-                on_exit=[velocity_controller_spawner],
+                on_exit=[optimal_controller_spawner],
             )
         )
     )
@@ -179,7 +176,7 @@ def generate_launch_description() -> LaunchDescription:
             controller_manager,
             *delay_thruster_spawners,
             delay_tam_controller_spawner_after_thruster_controller_spawners,
-            delay_velocity_controller_spawner_after_tam_controller_spawner,
+            delay_optimal_controller_spawner_after_tam_controller_spawner,
             controller_coordinator,
         ]
     )

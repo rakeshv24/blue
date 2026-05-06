@@ -12,5 +12,4 @@ controller_coordinator:
       - thruster7_controller
       - thruster8_controller
       - thruster_allocation_matrix_controller
-      # - adaptive_integral_terminal_sliding_mode_controller
-      - impedance_controller
+      - naive_mpc
