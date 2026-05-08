@@ -18,6 +18,9 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 
+import itertools
+from typing import Optional
+
 from launch import LaunchDescription
 from launch.actions import (
     DeclareLaunchArgument,
@@ -91,12 +94,22 @@ def generate_launch_description() -> LaunchDescription:
         ],
     )
 
-    def make_controller_args(name):
+    def make_controller_args(
+        name, active: bool = False, remappings: Optional[list[str]] = None
+    ):
         cm = ["--controller-manager", ["", "controller_manager"]]
         controller_timeout = ["--controller-manager-timeout", "120"]
         switch_timeout = ["--switch-timeout", "100"]
-        inactive = "--inactive"
-        return [name, *cm, *controller_timeout, *switch_timeout, inactive]
+        inactive = ["--inactive"] if not active else []
+        remap = (
+            itertools.chain(
+                *[["--controller-ros-args", f"-r {remap}"] for remap in remappings]
+            )
+            if remappings
+            else []
+        )
+        commands = [name, *cm, *controller_timeout, *switch_timeout, *inactive, *remap]
+        return commands
 
     optimal_controller_spawner = Node(
         package="controller_manager",
