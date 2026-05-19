@@ -114,7 +114,7 @@ def generate_launch_description() -> LaunchDescription:
     optimal_controller_spawner = Node(
         package="controller_manager",
         executable="spawner",
-        arguments=make_controller_args("naive_mpc"),
+        arguments=make_controller_args("robust_mpc"),
     )
 
     thruster_spawners = [
