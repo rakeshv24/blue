@@ -11,4 +11,5 @@ controller_coordinator:
       - thruster6_controller
       - thruster7_controller
       - thruster8_controller
+      - thruster_allocation_matrix_controller
       - robust_mpc

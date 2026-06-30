@@ -1,4 +1,4 @@
-# Copyright 2024, Evan Palmer
+# Copyright 2026, Rakesh Vivekanandan
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -92,6 +92,7 @@ def generate_launch_description() -> LaunchDescription:
                 ]
             ),
         ],
+        # arguments=["--ros-args", "--log-level", "robust_mpc:=debug"],
     )
 
     def make_controller_args(
